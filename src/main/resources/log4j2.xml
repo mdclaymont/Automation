@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="ConsoleFile" target="SYSTEM_OUT">
+			<PatternLayout>
+				<pattern>
+					"%d - %c - [%M] - (%p) - %m - %n
+				</pattern>
+			</PatternLayout>
+		</Console>
+		<File name="FileLoc" fileName="LogFile/myLog.log">
+			<PatternLayout>
+				<pattern>
+					"%d - %c - [%M] - (%p) - %m - %n
+					<SizeBasedTriggeringPolicy size="1024" />
+				</pattern>
+			</PatternLayout>
+		</File>
+	</Appenders>
+	<Loggers>
+		
+		<Root level="trace">
+			<AppenderRef ref="ConsoleFile" />
+			<AppenderRef ref="FileLoc" />
+		</Root>
+	</Loggers>
+</Configuration>
