@@ -6,7 +6,7 @@
 	</listeners>
   <test thread-count="5" name="Test">
      <classes>
-      <class name="Automation.HomePageTest"/>
+      <class name="AutomationPractice.HomePageTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

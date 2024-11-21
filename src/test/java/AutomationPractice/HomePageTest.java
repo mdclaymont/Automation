@@ -1,4 +1,4 @@
-package Automation;
+package AutomationPractice;
 
 
 import org.testng.Assert;

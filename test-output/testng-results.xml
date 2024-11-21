@@ -11,16 +11,16 @@
       <![CDATA[*********Expected Test Case products Are Succesfully Passed*********]]>
     </line>
   </reporter-output>
-  <suite started-at="2024-11-19T09:54:41 EST" name="Suite" finished-at="2024-11-19T09:55:03 EST" duration-ms="21394">
+  <suite started-at="2024-11-20T19:28:43 EST" name="Suite" finished-at="2024-11-20T19:28:55 EST" duration-ms="11549">
     <groups>
     </groups>
-    <test started-at="2024-11-19T09:54:41 EST" name="Test" finished-at="2024-11-19T09:55:03 EST" duration-ms="21394">
-      <class name="Automation.HomePageTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:Automation.HomePageTest@7c209437]" started-at="2024-11-19T09:54:41 EST" name="setUp" finished-at="2024-11-19T09:55:00 EST" duration-ms="19135" status="PASS">
+    <test started-at="2024-11-20T19:28:43 EST" name="Test" finished-at="2024-11-20T19:28:55 EST" duration-ms="11549">
+      <class name="AutomationPractice.HomePageTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:AutomationPractice.HomePageTest@f667fe]" started-at="2024-11-20T19:28:43 EST" name="setUp" finished-at="2024-11-20T19:28:52 EST" duration-ms="8717" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="products()[pri:0, instance:Automation.HomePageTest@7c209437]" started-at="2024-11-19T09:55:00 EST" name="products" finished-at="2024-11-19T09:55:02 EST" duration-ms="2159" status="PASS">
+        <test-method signature="products()[pri:0, instance:AutomationPractice.HomePageTest@f667fe]" started-at="2024-11-20T19:28:52 EST" name="products" finished-at="2024-11-20T19:28:55 EST" duration-ms="2768" status="PASS">
           <reporter-output>
             <line>
               <![CDATA[*******************************On Test Start**********************************]]>
@@ -30,11 +30,11 @@
             </line>
           </reporter-output>
         </test-method> <!-- products -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:Automation.HomePageTest@7c209437]" started-at="2024-11-19T09:55:02 EST" name="tearDown" finished-at="2024-11-19T09:55:02 EST" duration-ms="1" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:AutomationPractice.HomePageTest@f667fe]" started-at="2024-11-20T19:28:55 EST" name="tearDown" finished-at="2024-11-20T19:28:55 EST" duration-ms="0" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- Automation.HomePageTest -->
+      </class> <!-- AutomationPractice.HomePageTest -->
     </test> <!-- Test -->
   </suite> <!-- Suite -->
 </testng-results>
