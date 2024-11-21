@@ -4,14 +4,14 @@
 		<Console name="ConsoleFile" target="SYSTEM_OUT">
 			<PatternLayout>
 				<pattern>
-					"%d - %c - [%M] - (%p) - %m - %n
+					"%d{dd:MM:yyyy:HH:mm:ss} - %c - [%M] - (%p) - %m - %n
 				</pattern>
 			</PatternLayout>
 		</Console>
 		<File name="FileLoc" target="SYSTEM_OUT" fileName="LogFile/myLog.log">
 			<PatternLayout>
 				<pattern>
-					"%d - %c - [%M] - (%p) - %m - %n
+					"%d{dd:MM:yyyy:HH:mm:ss} - %c - [%M] - (%p) - %m - %n
 					<SizeBasedTriggeringPolicy size="1024" />
 				</pattern>
 			</PatternLayout>

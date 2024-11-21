@@ -5,22 +5,46 @@
       <![CDATA[*******Test case Started And Details Are Test Strated *********************]]>
     </line>
     <line>
+      <![CDATA[****************************************initilize Driver readProperties*******************]]>
+    </line>
+    <line>
+      <![CDATA[******************************************Url Open Strated******************************************]]>
+    </line>
+    <line>
+      <![CDATA[ Expected Url ' https://automationexercise.com/login ' Opend Or Lunch]]>
+    </line>
+    <line>
+      <![CDATA[******************************** Expected Browser Open Ended******************************]]>
+    </line>
+    <line>
       <![CDATA[*******************************On Test Start**********************************]]>
     </line>
     <line>
       <![CDATA[*********Expected Test Case products Are Succesfully Passed*********]]>
     </line>
   </reporter-output>
-  <suite started-at="2024-11-20T19:28:43 EST" name="Suite" finished-at="2024-11-20T19:28:55 EST" duration-ms="11549">
+  <suite started-at="2024-11-20T20:28:25 EST" name="Suite" finished-at="2024-11-20T20:28:37 EST" duration-ms="11337">
     <groups>
     </groups>
-    <test started-at="2024-11-20T19:28:43 EST" name="Test" finished-at="2024-11-20T19:28:55 EST" duration-ms="11549">
+    <test started-at="2024-11-20T20:28:25 EST" name="Test" finished-at="2024-11-20T20:28:37 EST" duration-ms="11337">
       <class name="AutomationPractice.HomePageTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:AutomationPractice.HomePageTest@f667fe]" started-at="2024-11-20T19:28:43 EST" name="setUp" finished-at="2024-11-20T19:28:52 EST" duration-ms="8717" status="PASS">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:AutomationPractice.HomePageTest@45c8d09f]" started-at="2024-11-20T20:28:25 EST" name="setUp" finished-at="2024-11-20T20:28:34 EST" duration-ms="8118" status="PASS">
           <reporter-output>
+            <line>
+              <![CDATA[****************************************initilize Driver readProperties*******************]]>
+            </line>
+            <line>
+              <![CDATA[******************************************Url Open Strated******************************************]]>
+            </line>
+            <line>
+              <![CDATA[ Expected Url ' https://automationexercise.com/login ' Opend Or Lunch]]>
+            </line>
+            <line>
+              <![CDATA[******************************** Expected Browser Open Ended******************************]]>
+            </line>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="products()[pri:0, instance:AutomationPractice.HomePageTest@f667fe]" started-at="2024-11-20T19:28:52 EST" name="products" finished-at="2024-11-20T19:28:55 EST" duration-ms="2768" status="PASS">
+        <test-method signature="products()[pri:0, instance:AutomationPractice.HomePageTest@45c8d09f]" started-at="2024-11-20T20:28:34 EST" name="products" finished-at="2024-11-20T20:28:37 EST" duration-ms="3159" status="PASS">
           <reporter-output>
             <line>
               <![CDATA[*******************************On Test Start**********************************]]>
@@ -30,7 +54,7 @@
             </line>
           </reporter-output>
         </test-method> <!-- products -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:AutomationPractice.HomePageTest@f667fe]" started-at="2024-11-20T19:28:55 EST" name="tearDown" finished-at="2024-11-20T19:28:55 EST" duration-ms="0" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:AutomationPractice.HomePageTest@45c8d09f]" started-at="2024-11-20T20:28:37 EST" name="tearDown" finished-at="2024-11-20T20:28:37 EST" duration-ms="1" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
