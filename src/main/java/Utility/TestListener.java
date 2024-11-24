@@ -14,8 +14,6 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.model.Log;
-
 import CommonClass.BaseClass;
 
 public class TestListener extends BaseClass implements ITestListener {
