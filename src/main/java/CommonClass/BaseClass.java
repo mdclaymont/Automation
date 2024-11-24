@@ -5,25 +5,23 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Base64.Encoder;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-//import java.util.logging.LogManager;
 import java.util.Scanner;
-import java.util.stream.LongStream;
-
+import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -34,11 +32,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 
@@ -50,7 +48,7 @@ import Utility.TestListener;
 
 public class BaseClass {
 	
-	public static String systemUserDir = System.getProperty("user.dir");
+	public static String currentDirectory = System.getProperty("user.dir");
 	public static String downloadPath = System.getProperty("user.dir") + File.separator + "downloads";
 	public static String configFilePath = ".\\Configuration\\config.properties";
 	public static Properties objProp;
@@ -60,14 +58,15 @@ public class BaseClass {
 	public static String browserName;
 	public static LogInPage lp;
 	public static HomePage hp;
-	public static Logger logger=LogManager.getLogger(BaseClass.class);
 	public static WebDriver driver;
-	public static SoftAssert soft=new SoftAssert();							// Declare Soft Assert
-	public static WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(EXPLICITLY_TIME));		//  Explicit Wait 
 	public static JavascriptExecutor jse;
 	public static FileInputStream objFile;
-	
-	
+	public static SoftAssert soft = new SoftAssert(); // Declare Soft Assert
+	public static WebDriverWait wait;
+	public static Logger logger = LogManager.getLogger(BaseClass.class);
+	public static Alert objAlert;
+	public static Actions objAction;
+
 	//	Initialize Properties For Data 
 	public BaseClass() {
 		readProperties("");
@@ -109,6 +108,17 @@ public class BaseClass {
 
 	public static String getConfigData(String expKeyToSearch) {
 		return objProp.getProperty(expKeyToSearch);
+	}
+	
+	/****************************************************************************************************************
+	 * Author: 			Md Rezaul Karim 
+	 * Function Name: 	getConfigData
+	 * Function Arg: 	expKeyToSearch
+	 * FunctionOutPut:	It will return String
+	 ***************************************************************************************************************/
+	public static WebDriverWait expicit() {
+		wait = new WebDriverWait(driver, Duration.ofSeconds(EXPLICITLY_TIME)); // Explicit Wait
+		return wait;
 	}
 	
 	/****************************************************************************************************************
@@ -188,7 +198,7 @@ public class BaseClass {
 			System.out.println(
 					"******************************** Expected Browser Open Started		******************************");
 			driver.get(expectedUrl);
-			String curUrl = driver.getCurrentUrl();
+		
 			Reporter.log("\t Expected Url ' " + expectedUrl + " ' Opend Or Lunch");
 			TestListener.test.log(Status.PASS, "\t Expected Url ' " + expectedUrl + " ' Opend Or Lunch");
 			logger.info("\t Expected Url ' " + expectedUrl + " ' Opend Or Lunch");
@@ -305,7 +315,7 @@ public class BaseClass {
 	public static String takeScreenShorts(String expFilePath, String expFileName) {
 		File objFtc = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		if (expFilePath.trim().isBlank() || expFilePath.trim().isEmpty()) {
-			expFilePath = systemUserDir + "\\ScreenShorts";
+			expFilePath = currentDirectory + "\\ScreenShorts";
 		}
 		if (expFileName.trim().isBlank() || expFileName.trim().isEmpty()) {
 			long RNum = randomNumber(5);
@@ -313,71 +323,15 @@ public class BaseClass {
 		}
 		String curFolder = createFolder(expFilePath);
 		String curFolderNFilePath = curFolder + "\\" + expFileName;
-		// String expTcFilePath =createFileFolder(expFilePath,expFileName);;
 		try {
 			FileUtils.copyFile(objFtc, new File(curFolderNFilePath));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return curFolderNFilePath;
 	}
 	
-	//					File And Folder
-
-	public String createFile(String expFileName) {
-		if (expFileName.trim().isBlank() || expFileName.trim().isEmpty()) {
-			long RNum = randomNumber(5);
-			expFileName = "Test" + RNum;
-		}
-
-		return expFileName;
-
-	}
-
-	public static String createFolder(String expFolderNameAndPath) {
-		// String folderPath = null;
-		if (expFolderNameAndPath.trim().isBlank() || expFolderNameAndPath.trim().isEmpty()) {
-			expFolderNameAndPath = systemUserDir + "\\TestFolder";
-		}
-
-		File objFc = new File(expFolderNameAndPath);
-		if (!objFc.exists()) {
-			objFc.mkdirs();
-		}
-
-		return expFolderNameAndPath;
-	}
-
-	public static String createFileFolder(String expFileFolderPath, String expFileName,String expFileExtention) {
-
-		if (expFileName.trim().isBlank() || expFileName.trim().isEmpty()) {
-			long RNum = randomNumber(5);
-			expFileName = "Test_" + RNum;
-		}
-
-		if (expFileExtention.isEmpty() || expFileExtention.length() < 1) {
-			expFileExtention = ".png";
-		}
-		String curFolder = createFolder(expFileFolderPath);
-		String curFolderNFilePath = curFolder + "\\" + expFileName + "." + expFileExtention;
-		File objFc = new File(curFolderNFilePath);
-		try {
-			boolean isFileCreated = objFc.createNewFile();
-			if (isFileCreated) {
-				System.out.println("File Created");
-			} else {
-				System.out.println("File Already Created or Exist");
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return curFolderNFilePath;
-	}
-	
-	
-	/****************************************************************************************************************
+		/****************************************************************************************************************
 	 * Author: 			Md Rezaul Karim 
 	 * Function Name: 	windowScroll
 	 * Function Arg:	WebElement expElement	expScroll
@@ -653,6 +607,55 @@ public class BaseClass {
 	}
 	
 	/****************************************************************************************************************
+	*  Author: Md Rezaul Karim 
+	*  Function Name: SetClander
+	*  Function Arg: String dateLocator, String monthLocator, String yearLocator, String nextLocator,String expectedDate
+	*  FunctionOutPut: It will Select value from drop down when drop down is not able to select by select tag
+	* ***************************************************************************************************************/
+	
+	public static void SetClander(List<WebElement> expDateElm, WebElement expMonthElm, WebElement expYearElm,
+			WebElement expNextLocator, String expDate) throws InterruptedException {
+
+		Reporter.log("*******************************Set Clander Started******************************************");
+		System.out.println("**********************Set Clander Started*******************************************");
+
+		String expDat[] = expDate.split("/");
+		String Month = expDat[0];
+		String day = expDat[1];
+		String years = expDat[2];
+		if (years.length() < 3) {
+			years = ("20" + years);
+		}
+		for (int i = 0; i < 11; i++) {
+			String month = expMonthElm.getText();
+			String year = expYearElm.getText();
+			if (month.toLowerCase().contains(Month.toLowerCase())) {
+				if (year.toLowerCase().contains(years.toLowerCase())) {
+					break;
+				}
+			} else {
+				expNextLocator.click();
+			}
+		}
+		int totalDate = expDateElm.size();
+		for (int i = 0; i < totalDate; i++) {
+			String actualDate = expDateElm.get(i).getText();
+			String reActualDate = actualDate.trim();
+			if (reActualDate.contains(day)) {
+				if (expDateElm.get(i).isEnabled())// check if date is enable
+				{
+					expDateElm.get(i).click();
+					break;
+				} else {
+					System.out.println("The Date you want select is Disable");
+				}
+			}
+		}
+		Reporter.log("*********************************Set Clander Ended******************************************");
+		System.out.println("***********************Set Clander Ended************************************************");
+	}
+
+	/****************************************************************************************************************
 	 *  Author: 		Md Rezaul Karim 
 	 *  Function Name:	refreshByJs
 	 *  Function Arg: 	ExpElement element locator
@@ -685,7 +688,113 @@ public class BaseClass {
 		jse.executeScript("arguments[0].style.border='3px solid red'", expElement);
 	}
 	
+	//*******************************************          Close                 *****************************************************//
 	
+	/****************************************************************************************************************
+	*  Author: 			Md Rezaul Karim 
+	*  Function Name: 	closeExpectedWindow
+	*  Function Arg: 	expWindowTabClose  ==> it will take number of child window tab that user want close
+	*  FunctionOutPut: 	close child window
+	* **************************************************************************************************************/
+	
+	public static void closeExpectedWindow(String expWindowTabClose) {
+
+		String[] ExTab = expWindowTabClose.split(",");
+		int totalTab = ExTab.length;
+		String PareantWindow = driver.getWindowHandle();
+		System.out.println("No. of tabs: " + PareantWindow);
+		Set<String> objWhandles = driver.getWindowHandles();
+		ArrayList<String> objTab = new ArrayList<String>(objWhandles);
+		int TotalWindow = objWhandles.size();
+		for (int i = 0; i < totalTab; i++) {
+			driver.switchTo().window(objTab.get(Integer.parseInt(ExTab[i]))).close();
+			System.out.println("No. of tabs: " + TotalWindow);
+		}
+		driver.switchTo().window(PareantWindow);
+	}
+
+	/****************************************************************************************************************
+	*  Author: Md Rezaul Karim 
+	*  Function Name: CloseAllChildWindow
+	*  Function Arg: it will close all  child window tab that user open
+	*  FunctionOutPut: close all child window
+	* ***************************************************************************************************************/
+		
+	public static void CloseAllChildWindow() {
+
+		String PareantWindow = driver.getWindowHandle();
+		System.out.println("No. of tabs: " + PareantWindow);
+		Set<String> objWhandles = driver.getWindowHandles();
+		int TotalWindow = objWhandles.size();
+		for (String child : objWhandles) {
+			if (!PareantWindow.equalsIgnoreCase(child)) {
+				driver.switchTo().window(child).close();
+				System.out.println("No. of tabs: " + TotalWindow);
+			}
+		}
+		driver.switchTo().window(PareantWindow);
+	}
+	
+	/****************************************************************************************************************
+	*  Author: Md Rezaul Karim 
+	*  Function Name: objAlert
+	*  Function Arg:  
+	*  FunctionOutPut: It will handle Alert acuction
+	 * @return 
+	* 
+	* **************************************************************************************************************/
+	public static Alert objAlert() {
+		objAlert = driver.switchTo().alert();
+		return objAlert;
+	}
+	
+	/****************************************************************************************************************
+	*  Author: Md Rezaul Karim 
+	*  Function Name: objAlert
+	*  Function Arg:  
+	*  FunctionOutPut: It will handle Alert acuction
+	 * @return 
+	* 
+	* **************************************************************************************************************/
+	public static Actions objAction() {
+		objAction = new Actions(driver);
+		return objAction;
+	}
+		
+	/****************************************************************************************************************
+	*  Author: Md Rezaul Karim 
+	*  Function Name: setAlert
+	*  Function Arg:  
+	*  FunctionOutPut: It will handle Alert acuction
+	 * @return 
+	* 
+	* **************************************************************************************************************/
+	
+	public static   boolean isAlertPresent(){
+		try {
+				driver.switchTo().alert();
+				return true;
+			}
+			catch(Exception e)
+			{
+				return false;
+			}
+	}
+	/****************************************************************************************************************
+	*  Author: 			Md Rezaul Karim 
+	*  Function Name: 	setFrame
+	*  Function Arg:  	expFrame it can be index or webelement or value 
+	*  FunctionOutPut: 	It will handle frame auction
+	* 
+	* 
+	**************************************************************************************************************/
+	
+	public static   WebDriver setFrame(WebElement expFrame){
+		 WebDriver frame = driver.switchTo().frame(expFrame);
+		return frame;
+	}
+	
+
 	////******************************   Validation Part   ******************************************************88
 	
 	
@@ -1033,12 +1142,84 @@ public class BaseClass {
 	}
 	
 	/****************************************************************************************************************
+	*  Author: 			Md Rezaul Karim 
+	*  Function Name: 	uniqueName
+	*  Function Arg:  	expFileStart it can be start With File Name  
+	*  FunctionOutPut: 	It will Create A Unique File Name 
+	**************************************************************************************************************/
+	
+	public static String uniqueName(String expFileStart) {
+		if(expFileStart==null || expFileStart.length()<1) {
+			expFileStart="Test";
+		}
+		Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy hh:mm:ss");
+        String formattedDate = formatter.format(date).trim();
+        System.out.println(formattedDate);
+		String expName=expFileStart+"_"+ formattedDate.replace(":","_").replace(" ","_").replace("/","_");
+		return expName;
+	}
+	
+//	File And Folder
+
+	/****************************************************************************************************************
+	*  Author: 			Md Rezaul Karim 
+	*  Function Name: 	createFolder
+	*  Function Arg: 	String expFolderNameAndPath
+	*  FunctionOutPut: 	It will take Create a folder with current date
+	***************************************************************************************************************/
+	
+	public static String createFolder(String expFolderNameAndPath) {
+		if (expFolderNameAndPath.trim().isBlank() || expFolderNameAndPath.trim().isEmpty()) {
+			expFolderNameAndPath = currentDirectory + "\\TestFolder";
+		}
+		File objFc = new File(expFolderNameAndPath);
+		if (!objFc.exists()) {
+			objFc.mkdirs();
+		}
+		return expFolderNameAndPath;
+	}
+
+	/****************************************************************************************************************
+	*  Author: 			Md Rezaul Karim 
+	*  Function Name: createFolder
+	*  Function Arg: String expFolderName
+	*  FunctionOutPut: It will take Create a folder with current date
+	* 
+	***************************************************************************************************************/
+	
+	public static String createFileFolder(String expFileFolderPath, String expFileName, String expFileExtention) {
+
+		if (expFileName.trim().isBlank() || expFileName.trim().isEmpty()) {
+			long RNum = randomNumber(5);
+			expFileName = "Test_" + RNum;
+		}
+
+		if (expFileExtention.isEmpty() || expFileExtention.length() < 1) {
+			expFileExtention = ".png";
+		}
+		String curFolder = createFolder(expFileFolderPath);
+		String curFolderNFilePath = curFolder + "\\" + expFileName + "." + expFileExtention;
+		File objFc = new File(curFolderNFilePath);
+		try {
+			boolean isFileCreated = objFc.createNewFile();
+			if (isFileCreated) {
+				System.out.println("File Created");
+			} else {
+				System.out.println("File Already Created or Exist");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return curFolderNFilePath;
+	}
+
+	/****************************************************************************************************************
 	 * Author: 			Md Rezaul Karim 
 	 * Function Name: 	encodedStr
 	 * Function Arg: 	String expStr
 	 * FunctionOutPut: 	It will encoded String
-	 * **************************************************************************************************************
-	 */
+	 * ***************************************************************************************************************/
 
 	public static String encodedStr(String expStr) {
 		String encodedResult= Base64.getEncoder().encodeToString(expStr.getBytes()); 
@@ -1051,8 +1232,7 @@ public class BaseClass {
 	 * Function Name: dencodedStr
 	 * Function Arg: String expStr
 	 * FunctionOutPut: It will dencoded String
-	 * **************************************************************************************************************
-	 */
+	 * ***************************************************************************************************************/
 
 	public static String dencodedStr(String expStr) {
 		byte[] actualByte= Base64.getDecoder().decode(expStr); 
@@ -1079,6 +1259,7 @@ public class BaseClass {
 				}
 		}
 		System.out.println("Exit from input taker ");
+		objInputValue.close();
 	}
 	
 	/****************************************************************************************************************

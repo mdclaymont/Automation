@@ -1,17 +1,21 @@
 package AutomationPractice;
 
-import CommonClass.BaseClass;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class Test extends BaseClass {
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println(randomAlphaNumeric(5));
+import Utility.XLUtility;
+
+
+public class Test {
+
+	public static void main(String[] args) throws IOException {
+		XLUtility xl=new XLUtility("","");
 		
-		System.out.println(randomFloatNumber(5,5));
-		
-		encodedStr("Test");
-		dencodedStr("VGVzdA==");
+		System.out.println(xl.getRowCount());
 		
 	}
 
